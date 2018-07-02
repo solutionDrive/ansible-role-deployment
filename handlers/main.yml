@@ -1,0 +1,7 @@
+---
+- name: remove key from root
+  file:
+    path: "{{ deployment_key_destination_path_root }}"
+    state: absent
+  become: yes
+  when: deployment_key_to_root_user and deployment_key_remove_key_from_root
