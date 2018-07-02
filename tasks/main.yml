@@ -1,0 +1,7 @@
+---
+- include: git.yml
+  when: deployment_enable_git
+- include: users.yml
+- include: filesystem.yml
+- include: authentication.yml
+- include: known_hosts.yml

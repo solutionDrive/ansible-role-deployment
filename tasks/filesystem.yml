@@ -1,0 +1,25 @@
+---
+- name: Create .ssh-Directory for www-data
+  file:
+    path: /var/www/.ssh
+    state: directory
+    owner: www-data
+    group: www-data
+  become: yes
+
+- name: Create .ssh-Directory for root if configured
+  file:
+    path: /root/.ssh
+    state: directory
+    owner: root
+    group: root
+  become: yes
+  when: deployment_key_to_root_user
+
+- name: "Create bin-directory for user {{ deployment_ssh_user }}"
+  file:
+    path: "/home/{{ deployment_ssh_user }}/bin"
+    state: directory
+    owner: "{{ deployment_ssh_user }}"
+    group: www-data
+  become: yes

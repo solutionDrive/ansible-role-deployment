@@ -1,0 +1,31 @@
+---
+- name: Ensure 'wheel'-group is present
+  group:
+    name: wheel
+    state: present
+  become: yes
+
+- name: Ensure 'wheel'-group has passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: visudo -cf %s
+  become: yes
+
+- name: "Create User {{ deployment_ssh_user }}"
+  user:
+    name: "{{ deployment_ssh_user }}"
+    group: "{{ deployment_ssh_user_group }}"
+    groups: www-data,wheel
+    #shell: "{{ deployment_ssh_user_shell }}"
+  become: yes
+
+- name: "Create .ssh-Directory for {{ deployment_ssh_user }}"
+  file:
+    path:  "{{ deployment_key_destination_path_ssh_user }}"
+    state: directory
+    owner: "{{ deployment_ssh_user }}"
+    group: www-data
+  become: yes

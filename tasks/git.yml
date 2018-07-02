@@ -1,0 +1,8 @@
+- name: "Add global git configuration (for convenience/comfort)"
+  template: >
+   src='gitconfig'
+   dest='/etc/gitconfig'
+   force=no
+  become: yes
+
+
