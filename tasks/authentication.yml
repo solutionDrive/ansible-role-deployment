@@ -57,6 +57,15 @@
   when: deployment_key_to_root_user
   notify: remove key from root
 
+- name: "Create /root/.composer/ path if it does not exists"
+  file:
+    state: directory
+    path: /root/.composer/
+    owner: root
+    group: root
+  become: yes
+  when: deployment_install_composer_auth
+
 - name: Store Toran-Authentication for composer installation for User root
   copy:
     src: "{{ deployment_src_path }}{{ deployment_name_of_toran_auth_file }}"
