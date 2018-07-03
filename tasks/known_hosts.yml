@@ -1,4 +1,9 @@
 ---
+- name: Ensure global ssh directory exist
+  file:
+    path: etc/ssh
+    state: present
+
 - name: Ensure global known_hosts files exist
   file:
     path: "{{ deployment_global_ssh_known_hosts_file }}"
