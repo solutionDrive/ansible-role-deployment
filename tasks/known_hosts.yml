@@ -2,7 +2,7 @@
 - name: Ensure global ssh directory exist
   file:
     path: etc/ssh
-    state: present
+    state: directory
 
 - name: Ensure global known_hosts files exist
   file:
