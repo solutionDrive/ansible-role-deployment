@@ -1,11 +1,4 @@
 ---
-- name: Ensure global ssh directory exist
-  file:
-    path: etc/ssh
-    state: directory
-    owner: root
-    group: root
-
 - name: Add bitbucket.org to global known_hosts
   lineinfile:
     path: "{{ deployment_global_ssh_known_hosts_file }}"
