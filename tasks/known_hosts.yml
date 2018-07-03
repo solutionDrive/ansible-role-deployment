@@ -3,6 +3,8 @@
   file:
     path: etc/ssh
     state: directory
+    owner: root
+    group: root
 
 - name: Ensure global known_hosts files exist
   file:
