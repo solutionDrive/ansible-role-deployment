@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: deployment
   author: solutionDrive GmbH
   description: Role to prepare servers for deployment
   company: solutionDrive GmbH
