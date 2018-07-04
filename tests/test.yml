@@ -1,5 +1,14 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+  become: yes
+
+  vars:
+    deployment_key_remove_key_from_root: false
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
   roles:
-    - solutiondrive.deployment
+    - role_under_test

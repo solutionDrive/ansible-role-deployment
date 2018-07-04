@@ -3,6 +3,3 @@
    src='gitconfig'
    dest='/etc/gitconfig'
    force=no
-  become: yes
-
-

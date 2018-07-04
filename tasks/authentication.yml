@@ -6,7 +6,6 @@
     owner: "{{ deployment_ssh_user }}"
     group: www-data
     mode: u=r,g=,o=
-  become: yes
 
 - name: Copy Public Deployment-Key
   copy:
@@ -15,7 +14,6 @@
     owner: "{{ deployment_ssh_user }}"
     group: www-data
     mode: u=rw,g=rw,o=r
-  become: yes
 
 - name: "create {{ deployment_auth_destination_path_ssh_user }} if it does not exist"
   file:
@@ -23,7 +21,6 @@
     path: "{{ deployment_auth_destination_path_ssh_user }}"
     owner: "{{ deployment_ssh_user }}"
     group: www-data
-  become: yes
 
 - name: "Store Toran-Authentication for composer installation for User {{ deployment_ssh_user }}"
   copy:
@@ -32,7 +29,6 @@
     owner: "{{ deployment_ssh_user }}"
     group: www-data
     mode: 0600
-  become: yes
   when: deployment_install_composer_auth
 
 - name: Copy Private Deployment-Key to root user if configured
@@ -42,7 +38,6 @@
     owner: root
     group: root
     mode: u=r,g=,o=
-  become: yes
   when: deployment_key_to_root_user
   notify: remove key from root
 
@@ -53,9 +48,16 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  become: yes
   when: deployment_key_to_root_user
   notify: remove key from root
+
+- name: "Create /root/.composer/ path if it does not exists"
+  file:
+    state: directory
+    path: /root/.composer/
+    owner: root
+    group: root
+  when: deployment_install_composer_auth
 
 - name: Store Toran-Authentication for composer installation for User root
   copy:
@@ -64,7 +66,6 @@
     owner: root
     group: root
     mode: 0600
-  become: yes
   when: deployment_install_composer_auth
 
 - name: Copy Private Deployment-Key to www-data user
@@ -74,7 +75,6 @@
     owner: www-data
     group: www-data
     mode: u=r,g=,o=
-  become: yes
 
 - name: Copy Public Deployment-Key to www-data user
   copy:
@@ -83,4 +83,3 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  become: yes

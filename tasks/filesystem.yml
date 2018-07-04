@@ -5,7 +5,6 @@
     state: directory
     owner: www-data
     group: www-data
-  become: yes
 
 - name: Create .ssh-Directory for root if configured
   file:
@@ -13,7 +12,6 @@
     state: directory
     owner: root
     group: root
-  become: yes
   when: deployment_key_to_root_user
 
 - name: "Create bin-directory for user {{ deployment_ssh_user }}"
@@ -22,4 +20,3 @@
     state: directory
     owner: "{{ deployment_ssh_user }}"
     group: www-data
-  become: yes
