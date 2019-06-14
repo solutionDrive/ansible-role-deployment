@@ -1,24 +1,9 @@
 ---
-- name: Add bitbucket.org to global known_hosts
+- name: Add keys to global known_hosts
   lineinfile:
     path: "{{ deployment_global_ssh_known_hosts_file }}"
-    line: "{{ deployment_bitbucket_public_host_key }}"
+    line: "{{ item }}"
     create: yes
     mode: 0644
     state: present
-
-- name: Add packagist.org to global known_hosts
-  lineinfile:
-    path: "{{ deployment_global_ssh_known_hosts_file }}"
-    line: "{{ deployment_packagist_public_host_key }}"
-    create: yes
-    mode: 0644
-    state: present
-
-- name: Add github.com to global known_hosts
-  lineinfile:
-    path: "{{ deployment_global_ssh_known_hosts_file }}"
-    line: "{{ deployment_github_public_host_key }}"
-    create: yes
-    mode: 0644
-    state: present
+  with_items: "{{ deployment_public_host_keys }}"
